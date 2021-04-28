@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Nueva Pestaña</title>
+</head>
+<body>
+    <nav class="navigation-bar">
+        <a href=""></a>
+    </nav>
+    <div class="main">
+        <div class="main__img-container">
+            <img class="main__img" src="images/ogreIcon.jpg" alt="Imagen de Google"> 
+        </div>
+        <div id="searcher-container" class="main__searcher">
+            <i class="icon-searcher--one">Lupa</i>
+            <input id="searcher" placeholder="Buscar en Google o escribir una URL" class="searcher__input" type="text">
+            <i class="icon-searcher--two">Microfono</i>
+        </div>
+        <div id="shortcutContainer" class="main__last-searches">
+            <div id="add">                
+                <img onclick="showModal();"></img>
+                <p>Añadir acceso directo</p>
+            </div>         
+        </div>
+    </div>
+    <div id="modal-add-container">
+        <div id="modal-add" class="modal-add">
+            <p>Añadir acceso directo</p>
+            <form id="add-form">
+                <label class="shortcut-label" for="name-shortcut">Nombre</label>
+                <input class="shortcut-input" id="name-shortcut" type="text">
+                <label class="shortcut-label" for="url-shortcut">URL</label>
+                <input class="shortcut-input" id="url-shortcut" type="text">
+
+                <div class="add-form-buttons">
+                    <button id="cancel-form-button" class="add-form-button">Cancelar</button>
+                    <input id="add-form-submit"  disabled type="submit" value="Listo">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
