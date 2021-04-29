@@ -93,23 +93,73 @@ function addShortcut(e){
         modalContainer.style.display="none";
         document.querySelector("#add").style.display ="none";
     };
-    console.log(shortCuts);
     modalContainer.style.display = "none";
     error[0]=false;
     error[1]="Acceso directo agregado correctamente";
     return error;
 };
+function changeShortcut(e){
+    e.preventDefault();
+    let error = [];
+    let img = document.querySelector(".menu-open").nextElementSibling;
+    let url = img.getAttribute("href");
+    let p = img.nextElementSibling;
+    let name = p.textContent;
+    if(shortcutName.value == name){
+        error[0] = true;
+        error[1] = "No has cambiado en nada el nombre";
+        return error;
+    } else if (shortcutUrl.value == url){
+        error[0] = true;
+        error[1] = "No has cambiado en nada la url";
+        return error;
+    };  
+    for(one in shortCuts){
+        if(name == shortCuts[one].name){     
+            shortCuts[one].name = shortcutName.value;
+            shortCuts[one].url = shortcutUrl.value;
+            img.removeAttribute("href");
+            img.setAttribute("href", shortcutUrl.value);
+            p.innerHTML = shortcutName.value;
+        };
+    };  
+    modalContainer.style.display = "none";
+    error[0]=false;
+    error[1]="Acceso directo modificado correctamente";
+    return error;
+};
 function getError(e){
-    let error = addShortcut(e);
-    if(error[0]){
-        alert(error[1])
-    }else{
-        alert(error[1]);   
-        shortcutName.value = "";
-        shortcutUrl.value = "";
-        shortcutSubmit.setAttribute("disabled", "");
-        shortcutSubmit.removeAttribute("class");
+    let type = shortcutSubmit.getAttribute("id");
+    if(type == "add-form-submit"){
+        type = 1;
+    } else if(type == "modify-form-submit"){
+        type = 2;
     };
+    if(type == 1){
+        let error = addShortcut(e);
+        if(error[0]){
+            alert(error[1]);
+        }else{
+            alert(error[1]);   
+            shortcutName.value = "";
+            shortcutUrl.value = "";
+            shortcutSubmit.setAttribute("disabled", "");
+            shortcutSubmit.removeAttribute("class");
+        };
+    }else{
+        let error = changeShortcut(e);;
+        if(error[0]){
+            alert(error[1]);
+        } else{
+            alert(error[1]);   
+            shortcutName.value = "";
+            shortcutUrl.value = "";
+            shortcutSubmit.setAttribute("disabled", "");
+            shortcutSubmit.removeAttribute("class");
+            shortcutSubmit.removeAttribute("id");
+            shortcutSubmit.setAttribute("id", "add-form-submit");
+        };
+    }
 };
 shortcutSubmit.addEventListener("click", getError);
 function modifyShortcut(element){
@@ -117,12 +167,19 @@ function modifyShortcut(element){
     let span = nav.parentElement;
     let div = span.parentElement;
     let p = div.lastChild;
-    let divT = p.previousSibling; 
+    let img = p.previousSibling; 
     p = p.textContent;
-    divT = divT.getAttribute("href");
+    img = img.getAttribute("href");
     shortcutName.value = p;
-    shortcutUrl.value = divT;   
+    shortcutUrl.value = img;   
     modalContainer.style.display="block";
+
+    shortcutSubmit.removeAttribute("id");
+    shortcutSubmit.setAttribute("id", "modify-form-submit");
+
+    let shortcutModify = document.querySelector("#modify-form-submit");
+
+    shortcutModify.addEventListener("click", getError);
 };
 function deleteShortcut(element){
     let nav = element.parentElement;
