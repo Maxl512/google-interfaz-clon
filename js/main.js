@@ -199,4 +199,3 @@ function deleteShortcut(element){
     };
     div.style.display="none";
 };
-
